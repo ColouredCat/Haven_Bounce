@@ -45,7 +45,6 @@ class Game:
         self.clock = pg.time.Clock()
 
         self.balloon = Balloon(self.screen)
-        
 
         asyncio.run(self.mainloop())
 

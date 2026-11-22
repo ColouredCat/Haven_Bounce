@@ -7,13 +7,16 @@ class Balloon(AnimSprite):
     speed = 5
 
     def __init__(self, screen):
-        start_x = pg.display.get_window_size()[0] / 2
+        width = pg.display.get_window_size()[0]
+        start_x = width / 2
         self.start_y = 620
         self.tick = 0
 
+        self.max_pos = (width/8) * 7
+        self.min_pos = (width/8)
+
         super().__init__(screen, "test/egg.png", 8, 16, 16, start_x, self.start_y, fps=8, scale=6)
         self.dx = 0
-        self.dy = 0
 
     def update(self, events):
         self.rect.y = self.start_y - 10 * sin(self.tick * 0.05)
@@ -36,7 +39,9 @@ class Balloon(AnimSprite):
                 if e.key == pg.K_d or e.key == pg.K_a:
                     self.dx = 0
 
-        self.rect.x += self.dx
-        self.rect.y += self.dy
+        if self.rect.x <= self.max_pos and self.dx > 0:
+            self.rect.x += self.dx
+        if self.rect.x >= self.min_pos and self.dx < 0:
+            self.rect.x += self.dx
 
         self.animate()
