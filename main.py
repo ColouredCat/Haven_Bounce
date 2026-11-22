@@ -25,7 +25,7 @@ class Game:
 
             events = pg.event.get()
 
-            self.egg.Update(events, self.balloon.rect.x, self.balloon.rect.width)
+            run = not self.egg.Update(events, self.balloon.rect.x, self.balloon.rect.width)
             self.egg.EnemyCollision(self.enemy,16,32)
 
             self.balloon.update(events)

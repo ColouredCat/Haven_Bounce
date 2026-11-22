@@ -6,8 +6,7 @@ class Egg (AnimSprite):
     vy=0
     ax=0
     ay=0.5
-
-    dead=False
+    speed = 4
 
     def __init__(self, screen):
         super().__init__(screen, "test/egg.png", 8, 16, 16, 500, 500, 5, 4)
@@ -15,7 +14,7 @@ class Egg (AnimSprite):
 
 
     def Update(self, ev, balloon_x, size_x):
-        self.dead = False
+        dead = False
 
         pg.draw.rect(self.screen,(255,0,0),[balloon_x,600,size_x,100],0)
 
@@ -26,9 +25,9 @@ class Egg (AnimSprite):
         for e in ev:
             if e.type == pg.KEYDOWN:
                 if e.key == pg.K_d:
-                    self.vx=10
+                    self.vx=speed
                 if e.key == pg.K_a:
-                    self.vx=-10
+                    self.vx=-speed
             if e.type == pg.KEYUP:
                 self.vx=0
             
@@ -42,8 +41,9 @@ class Egg (AnimSprite):
                 self.rect.y=600
                 self.vy=-10
             else:
-                self.vy=-30
-                self.dead = True
+                dead = True
+
+        return dead
 
     def EnemyCollision(self, e: Enemy, hitbox_x, hitbox_y):
         if(self.rect.x < e.rect.x + hitbox_x*0.5 
