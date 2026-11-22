@@ -14,7 +14,7 @@ class Egg (AnimSprite):
     dead = False
 
     def __init__(self, screen):
-        super().__init__(screen, "sprites/egg.png", 8, 16, 16, pg.display.get_window_size()[0]/2, 500)
+        super().__init__(screen, "sprites/egg.png", 8, 16, 16, pg.display.get_window_size()[0]/2, 500, fps=8)
 
 
     def Update(self, ev, balloon_rect, dt):
@@ -23,7 +23,7 @@ class Egg (AnimSprite):
 
         vx=0
 
-        self.animate(dt)
+        self.animate(1)
 
         for e in ev:
             if e.type == pg.KEYDOWN:

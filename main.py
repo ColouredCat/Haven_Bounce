@@ -51,6 +51,7 @@ class Game:
                     self.intro.animate(1)
                     dt = self.clock.tick(self.fps)
                     pg.display.flip()
+                    await asyncio.sleep(0)
                     if(not run):
                         break
                 start=True
@@ -59,7 +60,7 @@ class Game:
                 pg.mixer.music.play(-1)
 
             time_since_start =(time.time()-self.start_time)
-            if(time_since_start//(self.no_enemies*1.5+1)>self.no_enemies
+            if(time_since_start//(self.no_enemies*1.5+1)-2.57*10>self.no_enemies
                and time_since_start>4):
                 self.enemies.append(Enemy(self.screen))
             self.no_enemies = len(self.enemies)
@@ -132,6 +133,7 @@ class Game:
         self.clock = pg.time.Clock()
         self.font = pg.font.Font("fonts/font.ttf", 50)
         self.surface = pg.Surface((self.screen_width,self.screen_height), pg.SRCALPHA)
+        pg.mixer.music.set_volume(1)
 
         self.setup()
 

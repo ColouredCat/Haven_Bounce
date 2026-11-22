@@ -12,7 +12,7 @@ class Balloon(AnimSprite):
         start_x = width / 2
         self.tick = 0
 
-        super().__init__(screen, "sprites/balloonIdle.png", 6, 16, 16, start_x, 0, fps=8, scale=6)
+        super().__init__(screen, "sprites/balloonIdle.png", 6, 16, 16, start_x, 0, fps=8, scale=7)
 
         self.start_y = pg.display.get_window_size()[1] - 70
         self.rect.y = self.start_y
