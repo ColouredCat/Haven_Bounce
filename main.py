@@ -38,7 +38,7 @@ class Game:
             self.balloon.update(events, self.egg.rect)
 
             for col in range(self.no_collectibles):
-                if(self.egg.CollectibleCollision(self.collectibles[col],35,35)):
+                if(self.egg.rect.colliderect(self.collectibles[col].rect)):
                     del self.collectibles[col]
                     self.collectibles.append(Collectible(self.screen))
                     score += 1

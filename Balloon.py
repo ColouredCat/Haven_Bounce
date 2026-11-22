@@ -41,7 +41,7 @@ class Balloon(AnimSprite):
                     self.dx = self.speed
                     self.set_animation("sprites/balloonMoving.png", 1, fps=8)
                     self.xflip = False
-                elif e.key == pg.K_LEFT:
+                if e.key == pg.K_LEFT:
                     self.dx = -self.speed
                     self.set_animation("sprites/balloonMoving.png", 1, fps=8)
                     self.xflip = True
