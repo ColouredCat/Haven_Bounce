@@ -2,6 +2,7 @@
 import asyncio
 import pygame as pg
 from Player import Player
+from Egg import Egg
 
 class Game:
     screen_width = 1280
@@ -45,6 +46,7 @@ class Game:
         self.clock = pg.time.Clock()
 
         self.player = Player(self.screen, 5)
+        self.egg = Egg(self.screen)
 
         asyncio.run(self.mainloop())
 
