@@ -65,6 +65,9 @@ class Game:
         self.clock = pg.time.Clock()
 
         self.balloon = Balloon(self.screen)
+        self.no_collectibles = 1
+        self.collectibles = [Collectible(self.screen)]
+        self.bkg = Background(self.screen)
         self.egg = Egg(self.screen)
         self.enemy = Enemy(self.screen)
 
