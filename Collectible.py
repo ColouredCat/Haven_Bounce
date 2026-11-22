@@ -7,7 +7,7 @@ class Collectible(AnimSprite):
     rotate_speed = 2
 
     def __init__(self, screen):
-        super().__init__(screen, "sprites/saltMoving.png", 3, 16, 16, random.uniform(1000,1280), random.uniform(300,600), 5, 4)
+        super().__init__(screen, "sprites/saltMoving.png", 3, 16, 16, 1280, random.uniform(200,600), 5, 4)
         self.angle = 0
 
     def update(self):

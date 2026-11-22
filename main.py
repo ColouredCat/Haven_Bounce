@@ -28,10 +28,10 @@ class Game:
         score = 0
 
         while run:
-
-            if((time.time()-self.start_time)//(self.no_enemies+1)>self.no_enemies):
+            time_since_start =(time.time()-self.start_time)
+            if(time_since_start//(self.no_enemies*1.5+1)>self.no_enemies
+               and time_since_start>4):
                 self.enemies.append(Enemy(self.screen))
-                print(time.time())
             self.no_enemies = len(self.enemies)
 
             self.bkg.scroll()
