@@ -60,7 +60,7 @@ class Game:
                 pg.mixer.music.play(-1)
 
             time_since_start =(time.time()-self.start_time)
-            if(time_since_start//(self.no_enemies*1.5+1)-2.57*10>self.no_enemies
+            if(time_since_start//(self.no_enemies*1.5+1)>self.no_enemies
                and time_since_start>4):
                 self.enemies.append(Enemy(self.screen))
             self.no_enemies = len(self.enemies)
