@@ -6,12 +6,17 @@ class Egg (AnimSprite):
     ax=0
     ay=0.5
 
+    dead=False
+
     def __init__(self, screen):
         super().__init__(screen, "test/egg.png", 8, 16, 16, 500, 500, 5, 4)
         return
 
 
     def Update(self, ev, balloon_x, size_x):
+        self.dead = False
+
+        pg.draw.rect(self.screen,(255,0,0),[balloon_x,600,size_x,100],0)
 
         vx=0
 
@@ -36,12 +41,8 @@ class Egg (AnimSprite):
                 self.rect.y=600
                 self.vy=-10
             else:
-                #add death
                 self.vy=-30
-                print("GAME OVER")
+                self.dead = True
 
-        return
-    
-    def Render(self,screen):
-        pg.draw.circle(screen,(255,0,0),[self.rect.x,self.rect.y],50,0)
+    def EnemyCollision(self, Enemy):
         return
