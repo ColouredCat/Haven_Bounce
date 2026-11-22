@@ -32,7 +32,7 @@ class Egg (AnimSprite):
                     self.double_jump=False
 
                 if e.key == pg.K_s:
-                    self.vy=20
+                    self.vy=10
             if e.type == pg.KEYUP:
                 self.vx=0
 
@@ -47,7 +47,7 @@ class Egg (AnimSprite):
         self.rect.x += self.vx
         self.rect.y += self.vy
 
-        if(self.rect.y>600):
+        if(self.rect.y>700):
             if(self.rect.colliderect(balloon_rect)):
                 self.rect.y=600
                 self.vy=-20

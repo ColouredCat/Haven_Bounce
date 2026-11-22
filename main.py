@@ -8,6 +8,7 @@ from Enemy import Enemy
 from Background import Background
 from Collectible import Collectible
 from GameOver import GameOver
+from OverlayInfo import OverlayInfo
 
 class Game:
     screen_width = 1280
@@ -85,9 +86,12 @@ class Game:
                 self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x+self.GameOver.sprite.get_rect().width, 0))
                 pg.display.flip()
                 await asyncio.sleep(3)
+                score = 0
                 self.setup()
 
             self.draw_text(str(score), 20, 20)
+            self.overlay.screen.blit(self.overlay.sprite, (self.overlay.x, 100))
+            self.overlay.screen.blit(self.overlay.sprite, (self.overlay.x+self.overlay.sprite.get_rect().width, -50))
 
             dt = self.clock.tick(self.fps) / 1000
             pg.display.flip()
@@ -113,6 +117,7 @@ class Game:
         self.setup()
 
         self.GameOver = GameOver(self.screen)
+        self.overlay = OverlayInfo(self.screen)
 
         asyncio.run(self.mainloop())
         #
