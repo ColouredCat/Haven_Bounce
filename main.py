@@ -4,6 +4,7 @@ import pygame as pg
 from Egg import Egg
 from Balloon import Balloon
 from Enemy import Enemy
+from Background import Background
 
 class Game:
     screen_width = 1280
@@ -21,7 +22,7 @@ class Game:
 
         while run:
 
-            self.screen.fill("purple")
+            self.bkg.scroll()
 
             events = pg.event.get()
 
@@ -54,6 +55,7 @@ class Game:
         self.egg = Egg(self.screen)
         self.balloon = Balloon(self.screen)
         self.enemy = Enemy(self.screen)
+        self.bkg = Background(self.screen)
 
         asyncio.run(self.mainloop())
 
