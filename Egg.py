@@ -12,11 +12,19 @@ class Egg (AnimSprite):
 
 
     def Update(self, ev):
+
+        vx=0
+
         self.animate()
 
         for e in ev:
+            if e.type == pg.KEYDOWN:
+                if e.key == pg.K_d:
+                    self.vx=10
+                if e.key == pg.K_a:
+                    self.vx=-10
             if e.type == pg.KEYUP:
-                self.vy=-10
+                self.vx=0
             
         self.vx += self.ax
         self.vy += self.ay
@@ -25,6 +33,7 @@ class Egg (AnimSprite):
 
         if(self.rect.y>600):
             self.rect.y=600
+            self.vy=-10
 
         #add death and bounce logic here
 
