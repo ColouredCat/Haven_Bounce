@@ -8,7 +8,7 @@ class Egg (AnimSprite):
     vy=0
     ax=0
     ay=0.5
-    speed = 4
+    speed = 6
 
     double_jump=True
     dead = False
@@ -32,7 +32,7 @@ class Egg (AnimSprite):
                     self.double_jump=False
 
                 if e.key == pg.K_s:
-                    self.vy=10
+                    self.vy=20
             if e.type == pg.KEYUP:
                 self.vx=0
 

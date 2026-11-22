@@ -37,22 +37,22 @@ class Balloon(AnimSprite):
         self.rect.y = self.start_y - 5 * sin(self.tick * 0.05)
         self.tick += dt
 
-        for e in events:
-            if e.type == pg.KEYDOWN:
-                if e.key == pg.K_RIGHT:
-                    self.dx = self.speed
-                    if not self.squish:
-                        self.set_animation("sprites/balloonMoving.png", 1, fps=8)
-                if e.key == pg.K_LEFT:
-                    self.dx = -self.speed
-                    if not self.squish:
-                        self.set_animation("sprites/balloonMoving.png", 1, fps=8)
-            
-            elif e.type == pg.KEYUP:
+        for e in events: 
+            if e.type == pg.KEYUP:
                 if e.key == pg.K_LEFT or e.key == pg.K_RIGHT:
                     if not self.squish:
                         self.set_animation("sprites/balloonIdle.png", 6, fps=2)
                     self.dx = 0
+
+        keys = pg.key.get_pressed()
+        if(keys[pg.K_LEFT]):
+            self.dx=-self.speed
+            if not self.squish:
+                self.set_animation("sprites/balloonMoving.png", 1, fps=8)
+        if(keys[pg.K_RIGHT]):
+            self.dx=self.speed
+            if not self.squish:
+                self.set_animation("sprites/balloonMoving.png", 1, fps=8)
 
         if self.rect.x <= self.max_pos and self.dx > 0:
             self.rect.x += self.dx

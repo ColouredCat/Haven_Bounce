@@ -7,8 +7,8 @@ from Balloon import Balloon
 from Enemy import Enemy
 from Background import Background
 from Collectible import Collectible
-from GameOver import GameOver
-from OverlayInfo import OverlayInfo
+from Overlay import Overlay
+from AnimSprite import AnimSprite
 
 class Game:
     screen_width = 1280
@@ -42,6 +42,16 @@ class Game:
         dt = 0
 
         while run:
+
+            if(not start and run):
+                for i in range(18*60):
+                    run = self.check_exit(pg.event.get())
+                    self.intro.animate(1)
+                    dt = self.clock.tick(self.fps)
+                    pg.display.flip()
+                    if(not run):
+                        break
+                start=True
 
             time_since_start =(time.time()-self.start_time)
             if(time_since_start//(self.no_enemies*1.5+1)>self.no_enemies
@@ -82,16 +92,14 @@ class Game:
             if(self.egg.dead):
                 self.surface.fill((255,0,0,3))
                 self.screen.blit(self.surface,(0,0))
-                self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x, 0))
-                self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x+self.GameOver.sprite.get_rect().width, 0))
+                self.GameOver.screen.blit(self.GameOver.sprite, (-60,100))
                 pg.display.flip()
                 await asyncio.sleep(3)
                 score = 0
                 self.setup()
 
             self.draw_text(str(score), 20, 20)
-            self.overlay.screen.blit(self.overlay.sprite, (self.overlay.x, 100))
-            self.overlay.screen.blit(self.overlay.sprite, (self.overlay.x+self.overlay.sprite.get_rect().width, -50))
+            self.overlay.screen.blit(self.overlay.sprite, (self.overlay.x+self.overlay.sprite.get_rect().width, 0))
 
             dt = self.clock.tick(self.fps) / 1000
             pg.display.flip()
@@ -116,11 +124,12 @@ class Game:
 
         self.setup()
 
-        self.GameOver = GameOver(self.screen)
-        self.overlay = OverlayInfo(self.screen)
+        self.GameOver = Overlay(self.screen,-1200,18,"backgrounds/gameOver.png")
+        self.overlay = Overlay(self.screen,-500,3.5,"backgrounds/overlay.png")
+        self.intro = AnimSprite(self.screen, "sprites/Intro.png", 7, 80, 45, 0, 0, 0.388, 16)
+        self.slide_no=1
 
         asyncio.run(self.mainloop())
-        #
 
 debug = False
 
