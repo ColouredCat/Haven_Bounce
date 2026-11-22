@@ -10,6 +10,8 @@ class Egg (AnimSprite):
     ay=0.5
     speed = 4
 
+    double_jump=True
+
     def __init__(self, screen):
         super().__init__(screen, "sprites/egg.png", 8, 16, 16, 500, 500)
 
@@ -25,12 +27,17 @@ class Egg (AnimSprite):
 
         for e in ev:
             if e.type == pg.KEYDOWN:
-                if e.key == pg.K_d:
-                    self.vx=self.speed
-                if e.key == pg.K_a:
-                    self.vx=-self.speed
+                if e.key == pg.K_SPACE and self.double_jump:
+                    self.vy=-10
+                    self.double_jump=False
             if e.type == pg.KEYUP:
                 self.vx=0
+
+        keys = pg.key.get_pressed()
+        if(keys[pg.K_d]):
+            self.vx=self.speed
+        if(keys[pg.K_a]):
+            self.vx=-self.speed
             
         self.vx += self.ax
         self.vy += self.ay
@@ -41,6 +48,7 @@ class Egg (AnimSprite):
             if(self.rect.x<balloon_x+size_x*0.5 and self.rect.x>balloon_x-size_x*0.5):
                 self.rect.y=600
                 self.vy=-20
+                self.double_jump=True
             else:
                 self.dead = True
 
