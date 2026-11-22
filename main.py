@@ -7,6 +7,7 @@ from Balloon import Balloon
 from Enemy import Enemy
 from Background import Background
 from Collectible import Collectible
+from GameOver import GameOver
 
 class Game:
     screen_width = 1280
@@ -22,6 +23,13 @@ class Game:
     def draw_text(self, text, x, y):
         s = self.font.render(text, False, pg.Color(0,0,0))
         self.screen.blit(s, (x, y))
+
+    def gameOver(self):
+        self.surface.fill((255,0,0,5))
+        self.screen.blit(self.surface,(0,0))
+        self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x, 0))
+        self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x+self.GameOver.sprite.get_rect().width, 0))
+        pg.display.flip()
 
     async def mainloop(self):
         run = True
@@ -66,11 +74,17 @@ class Game:
                 print("GAME OVER",len(self.collectibles))
                 pg.draw.circle(self.screen,[0,0,255],[50,50],20,0)
 
+                run=False
+
             self.draw_text(str(score), 20, 20)
 
             self.clock.tick(self.fps)
             pg.display.flip()
             await asyncio.sleep(0)
+
+
+        while self.check_exit(pg.event.get()):
+            self.gameOver()
 
         pg.quit()
         pg.display.quit()
@@ -88,6 +102,7 @@ class Game:
         self.screen = pg.display.get_surface()
         self.clock = pg.time.Clock()
         self.font = pg.font.Font("fonts/font.ttf", 50)
+        self.surface = pg.Surface((self.screen_width,self.screen_height), pg.SRCALPHA)
 
         self.balloon = Balloon(self.screen)
         self.collectibles = [Collectible(self.screen)]
@@ -96,6 +111,8 @@ class Game:
         self.egg = Egg(self.screen)
         self.enemies = []
         self.no_enemies = len(self.enemies)
+
+        self.GameOver = GameOver(self.screen)
 
         asyncio.run(self.mainloop())
 
