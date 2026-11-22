@@ -66,7 +66,6 @@ class Game:
 
         self.balloon = Balloon(self.screen)
         self.egg = Egg(self.screen)
-        self.balloon = Balloon(self.screen)
         self.enemy = Enemy(self.screen)
         self.collectibles = [Collectible(self.screen)]
         self.no_collectibles = 1
