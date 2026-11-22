@@ -16,7 +16,7 @@ class Egg (AnimSprite):
     def Update(self, ev, balloon_x, size_x):
         self.dead = False
 
-        pg.draw.rect(self.screen,(255,0,0),[balloon_x,600,size_x,100],0)
+        #pg.draw.rect(self.screen,(255,0,0),[balloon_x,600,size_x,100],0)
 
         vx=0
 
@@ -25,9 +25,9 @@ class Egg (AnimSprite):
         for e in ev:
             if e.type == pg.KEYDOWN:
                 if e.key == pg.K_d:
-                    self.vx=speed
+                    self.vx=self.speed
                 if e.key == pg.K_a:
-                    self.vx=-speed
+                    self.vx=-self.speed
             if e.type == pg.KEYUP:
                 self.vx=0
             

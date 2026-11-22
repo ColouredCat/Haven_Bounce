@@ -5,6 +5,7 @@ from math import sin
 
 class Balloon(AnimSprite):
     speed = 5
+    squish_time = (6/16) *16
 
     def __init__(self, screen):
         width = pg.display.get_window_size()[0]
@@ -20,10 +21,16 @@ class Balloon(AnimSprite):
         self.min_pos = 0
         self.dx = 0
         self.squish = False
+        self.squish_timer = 0
 
     def update(self, events, egg_rect):
         if self.rect.colliderect(egg_rect):
             self.squish = True
+        if self.squish:
+            self.squish_timer += 1
+        if self.squish_timer == self.squish_time:
+            self.squish = False
+            self.squish_timer = 0
 
         self.rect.y = self.start_y - 5 * sin(self.tick * 0.05)
         self.tick += 1
@@ -46,7 +53,7 @@ class Balloon(AnimSprite):
                     self.dx = 0
 
         if self.squish:
-            self.set_animation("sprites/balloonSquish.png", 6, fps=2)
+            self.set_animation("sprites/balloonSquish.png", 6, fps=16)
 
         if self.rect.x <= self.max_pos and self.dx > 0:
             self.rect.x += self.dx
