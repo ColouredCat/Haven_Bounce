@@ -5,7 +5,7 @@ from math import sin
 
 class Balloon(AnimSprite):
     speed = 5
-    squish_time = (6/16) *16
+    squish_time = (6/16) * 60
 
     def __init__(self, screen):
         width = pg.display.get_window_size()[0]
@@ -24,11 +24,13 @@ class Balloon(AnimSprite):
         self.squish_timer = 0
 
     def update(self, events, egg_rect):
+        print(self.squish_timer)
         if self.rect.colliderect(egg_rect):
+            self.set_animation("sprites/balloonSquish.png", 6, fps=16)
             self.squish = True
         if self.squish:
             self.squish_timer += 1
-        if self.squish_timer == self.squish_time:
+        if self.squish_timer >= self.squish_time:
             self.squish = False
             self.squish_timer = 0
 
@@ -39,21 +41,21 @@ class Balloon(AnimSprite):
             if e.type == pg.KEYDOWN:
                 if e.key == pg.K_RIGHT:
                     self.dx = self.speed
-                    self.set_animation("sprites/balloonMoving.png", 1, fps=8)
+                    if not self.squish:
+                        self.set_animation("sprites/balloonMoving.png", 1, fps=8)
                     self.xflip = False
                 if e.key == pg.K_LEFT:
                     self.dx = -self.speed
-                    self.set_animation("sprites/balloonMoving.png", 1, fps=8)
+                    if not self.squish:
+                        self.set_animation("sprites/balloonMoving.png", 1, fps=8)
                     self.xflip = True
                     
             elif e.type == pg.KEYUP:
                 if e.key == pg.K_LEFT ^ e.key == pg.K_RIGHT:
-                    self.set_animation("sprites/balloonIdle.png", 6, fps=2)
+                    if not self.squish:
+                        self.set_animation("sprites/balloonIdle.png", 6, fps=2)
                     self.xflip = False
                     self.dx = 0
-
-        if self.squish:
-            self.set_animation("sprites/balloonSquish.png", 6, fps=16)
 
         if self.rect.x <= self.max_pos and self.dx > 0:
             self.rect.x += self.dx
