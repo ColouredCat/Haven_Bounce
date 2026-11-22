@@ -48,7 +48,7 @@ class Game:
 
             for em in range(self.no_enemies):
                 self.egg.EnemyCollision(self.enemies[em],80,100)
-                if(self.enemies[em].rect.x<0 or self.enemies[em].rect.y>720 or self.enemies[em].rect.y<0):
+                if(self.enemies[em].rect.x<-64 or self.enemies[em].rect.y>720 or self.enemies[em].rect.y<-64):
                     del self.enemies[em]
                     self.enemies.append(Enemy(self.screen))
                 self.enemies[em].update()
@@ -63,7 +63,7 @@ class Game:
             self.draw_text(str(score), 20, 20)
 
             self.clock.tick(self.fps)
-            pg.display.update()
+            pg.display.flip()
             await asyncio.sleep(0)
 
         pg.quit()

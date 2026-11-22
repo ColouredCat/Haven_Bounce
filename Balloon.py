@@ -47,7 +47,7 @@ class Balloon(AnimSprite):
                     self.xflip = True
                     
             elif e.type == pg.KEYUP:
-                if e.key == pg.K_LEFT or e.key == pg.K_RIGHT:
+                if e.key == pg.K_LEFT ^ e.key == pg.K_RIGHT:
                     self.set_animation("sprites/balloonIdle.png", 6, fps=2)
                     self.xflip = False
                     self.dx = 0
