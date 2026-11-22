@@ -47,12 +47,13 @@ class Egg (AnimSprite):
         self.rect.x += self.vx
         self.rect.y += self.vy
 
-        if(self.rect.y>700):
+        if(self.rect.y>600):
             if(self.rect.colliderect(balloon_rect)):
                 self.rect.y=600
                 self.vy=-20
                 self.double_jump=True
-            else:
+            elif(self.rect.y>700):
+                self.rect.y=650
                 self.dead = True
 
         return self.dead

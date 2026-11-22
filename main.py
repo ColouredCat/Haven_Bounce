@@ -62,7 +62,7 @@ class Game:
                     del self.collectibles[col]
                     self.collectibles.append(Collectible(self.screen))
                     score += 1
-                if (self.collectibles[col].rect.x<0):
+                if (self.collectibles[col].rect.y>720):
                     del self.collectibles[col]
                     self.collectibles.append(Collectible(self.screen))
                 self.collectibles[col].update(dt/(1/60))  

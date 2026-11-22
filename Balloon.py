@@ -4,7 +4,7 @@ import pygame as pg
 from math import sin
 
 class Balloon(AnimSprite):
-    speed = 5
+    speed = 10
     squish_time = (6/16) * 60
 
     def __init__(self, screen):
