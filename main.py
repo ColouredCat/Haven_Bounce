@@ -32,6 +32,9 @@ class Game:
             self.balloon.update(events, self.egg.rect)
 
             for col in range(self.no_collectibles):
+                if(self.egg.CollectibleCollision(self.collectibles[col],35,35)): #change collectible hitbox here
+                    del self.collectibles[col]
+                    self.collectibles.append(Collectible(self.screen))
                 self.collectibles[col].update()
 
             self.enemy.update()
