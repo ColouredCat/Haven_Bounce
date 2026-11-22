@@ -17,7 +17,7 @@ class Egg (AnimSprite):
         super().__init__(screen, "sprites/egg.png", 8, 16, 16, pg.display.get_window_size()[0]/2, 500)
 
 
-    def Update(self, ev, balloon_x, size_x, dt):
+    def Update(self, ev, balloon_rect, dt):
 
         #pg.draw.rect(self.screen,(255,0,0),[balloon_x,600,size_x,100],0)
 
@@ -48,7 +48,7 @@ class Egg (AnimSprite):
         self.rect.y += self.vy
 
         if(self.rect.y>600):
-            if(self.rect.x<balloon_x+size_x*0.5 and self.rect.x>balloon_x-size_x*0.5):
+            if(self.rect.colliderect(balloon_rect)):
                 self.rect.y=600
                 self.vy=-20
                 self.double_jump=True

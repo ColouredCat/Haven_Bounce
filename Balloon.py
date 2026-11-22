@@ -49,7 +49,7 @@ class Balloon(AnimSprite):
                         self.set_animation("sprites/balloonMoving.png", 1, fps=8)
             
             elif e.type == pg.KEYUP:
-                if e.key == pg.K_LEFT ^ e.key == pg.K_RIGHT:
+                if e.key == pg.K_LEFT or e.key == pg.K_RIGHT:
                     if not self.squish:
                         self.set_animation("sprites/balloonIdle.png", 6, fps=2)
                     self.dx = 0

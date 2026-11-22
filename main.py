@@ -24,6 +24,16 @@ class Game:
         s = self.font.render(text, False, pg.Color(0,0,0))
         self.screen.blit(s, (x, y))
 
+    def setup(self):
+        self.start_time = time.time()
+        self.balloon = Balloon(self.screen)
+        self.collectibles = [Collectible(self.screen)]
+        self.no_collectibles = len(self.collectibles)
+        self.bkg = Background(self.screen)
+        self.egg = Egg(self.screen)
+        self.enemies = []
+        self.no_enemies = len(self.enemies)
+
     async def mainloop(self):
         run = True
         start = False
@@ -43,7 +53,7 @@ class Game:
             events = pg.event.get()
 
             if(not self.egg.dead):
-                self.egg.Update(events, self.balloon.rect.x, self.balloon.rect.width, dt)
+                self.egg.Update(events, self.balloon.rect, dt)
                 self.balloon.update(events, self.egg.rect, dt/(1/60))
 
             for col in range(self.no_collectibles):
@@ -73,6 +83,9 @@ class Game:
                 self.screen.blit(self.surface,(0,0))
                 self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x, 0))
                 self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x+self.GameOver.sprite.get_rect().width, 0))
+                pg.display.flip()
+                await asyncio.sleep(3)
+                self.setup()
 
             self.draw_text(str(score), 20, 20)
 
@@ -86,7 +99,6 @@ class Game:
         pg.mixer.quit()
 
     def __init__(self):
-        self.start_time = time.time()
         pg.init()
         pg.display.init()
         pg.font.init()
@@ -98,13 +110,7 @@ class Game:
         self.font = pg.font.Font("fonts/font.ttf", 50)
         self.surface = pg.Surface((self.screen_width,self.screen_height), pg.SRCALPHA)
 
-        self.balloon = Balloon(self.screen)
-        self.collectibles = [Collectible(self.screen)]
-        self.no_collectibles = len(self.collectibles)
-        self.bkg = Background(self.screen)
-        self.egg = Egg(self.screen)
-        self.enemies = []
-        self.no_enemies = len(self.enemies)
+        self.setup()
 
         self.GameOver = GameOver(self.screen)
 
