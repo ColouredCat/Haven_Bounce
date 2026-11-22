@@ -28,18 +28,24 @@ class Game:
             events = pg.event.get()
 
             self.egg.Update(events, self.balloon.rect.x, self.balloon.rect.width)
-            self.egg.EnemyCollision(self.enemy,16,32)
 
             self.balloon.update(events, self.egg.rect)
 
             for col in range(self.no_collectibles):
-                if(self.egg.CollectibleCollision(self.collectibles[col],35,35) 
+                if(self.egg.CollectibleCollision(self.collectibles[col],45,45) 
                    or self.collectibles[col].rect.x<0): #change collectible hitbox here
                     del self.collectibles[col]
                     self.collectibles.append(Collectible(self.screen))
                 self.collectibles[col].update()
 
-            self.enemy.update()
+            for em in range(self.no_enemies):
+                self.egg.EnemyCollision(self.enemies[em],80,100)
+                if(self.enemies[em].rect.x<0 or self.enemies[em].rect.y>720 or self.enemies[em].rect.y<0):
+                    del self.enemies[em]
+                    self.enemies.append(Enemy(self.screen))
+                self.enemies[em].update()
+
+
             run = self.check_exit(events)
 
             if(self.egg.dead):
@@ -66,11 +72,12 @@ class Game:
         self.clock = pg.time.Clock()
 
         self.balloon = Balloon(self.screen)
-        self.no_collectibles = 1
         self.collectibles = [Collectible(self.screen)]
+        self.no_collectibles = len(self.collectibles)
         self.bkg = Background(self.screen)
         self.egg = Egg(self.screen)
-        self.enemy = Enemy(self.screen)
+        self.enemies = [Enemy(self.screen),Enemy(self.screen),Enemy(self.screen)]
+        self.no_enemies = len(self.enemies)
 
         asyncio.run(self.mainloop())
 
