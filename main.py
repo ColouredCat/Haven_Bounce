@@ -4,6 +4,7 @@ import pygame as pg
 from Egg import Egg
 from Balloon import Balloon
 from Enemy import Enemy
+from Background import Background
 from Collectible import Collectible
 
 class Game:
@@ -22,7 +23,7 @@ class Game:
 
         while run:
 
-            self.screen.fill("purple")
+            self.bkg.scroll()
 
             events = pg.event.get()
 
@@ -66,8 +67,6 @@ class Game:
         self.balloon = Balloon(self.screen)
         self.egg = Egg(self.screen)
         self.enemy = Enemy(self.screen)
-        self.collectibles = [Collectible(self.screen)]
-        self.no_collectibles = 1
 
         asyncio.run(self.mainloop())
 
