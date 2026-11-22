@@ -9,7 +9,7 @@ class Enemy(AnimSprite):
 
     def __init__(self, screen):
         height = pg.display.get_window_size()[1]
-        self.start_y = randint(height / 4, (height/4)*3)
+        self.start_y = randint(height // 4, (height//4)*3)
         
         super().__init__(screen, "test/knife.png", 2, 16, 32, pg.display.get_window_size()[0], self.start_y)
         self.xflip = True
