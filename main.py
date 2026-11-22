@@ -23,7 +23,10 @@ class Game:
             self.screen.fill("purple")
 
             events = pg.event.get()
+
             self.player.update(events)
+            self.egg.Update(events)
+
             run = self.check_exit(events)
 
             self.clock.tick(self.fps)
