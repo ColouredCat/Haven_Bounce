@@ -24,13 +24,6 @@ class Game:
         s = self.font.render(text, False, pg.Color(0,0,0))
         self.screen.blit(s, (x, y))
 
-    def gameOver(self):
-        self.surface.fill((255,0,0,5))
-        self.screen.blit(self.surface,(0,0))
-        self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x, 0))
-        self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x+self.GameOver.sprite.get_rect().width, 0))
-        pg.display.flip()
-
     async def mainloop(self):
         run = True
         score = 0
@@ -85,10 +78,6 @@ class Game:
             pg.display.flip()
             await asyncio.sleep(0)
 
-
-        while self.check_exit(pg.event.get()):
-            self.gameOver()
-
         pg.quit()
         pg.display.quit()
         pg.font.quit()
@@ -120,7 +109,7 @@ class Game:
         asyncio.run(self.mainloop())
         #
 
-debug = True
+debug = False
 
 if debug:
     import cProfile
