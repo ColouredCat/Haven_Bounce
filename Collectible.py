@@ -10,9 +10,9 @@ class Collectible(AnimSprite):
         super().__init__(screen, "sprites/saltMoving.png", 3, 16, 16, random.uniform(1000,1280), random.uniform(300,600), 5, 4)
         self.angle = 0
 
-    def update(self):
+    def update(self, dt):
         self.rect.x-=10
-        self.anim_count += 1
+        self.anim_count += dt
         anim_frame = (self.anim_count/60) // (1/self.fps)
 
         if anim_frame > self.frame_count:
@@ -20,7 +20,7 @@ class Collectible(AnimSprite):
             anim_frame = 0
 
         frame_rect = pg.Rect(anim_frame * self.rect.width, 0, self.rect.width, self.rect.height)
-        img = pg.transform.flip(self.sprite.subsurface(frame_rect), self.xflip, self.yflip)
+        img = self.sprite.subsurface(frame_rect)
         img = pg.transform.rotate(img, self.angle)
         self.screen.blit(img, self.rect)
 

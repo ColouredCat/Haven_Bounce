@@ -13,8 +13,6 @@ class AnimSprite:
         self.anim_count = 0
         self.fps = fps
         self.frame_count = frame_count-1
-        self.xflip = False
-        self.yflip = False
 
     def set_animation(self, img_source, frame_count, fps=5):
         self.sprite = pg.Surface.convert_alpha(pg.image.load(img_source))
@@ -24,14 +22,14 @@ class AnimSprite:
         self.fps = fps
         self.frame_count = frame_count-1
 
-    def animate(self):
-        self.anim_count += 1
+    def animate(self, dt):
+        self.anim_count += dt
         anim_frame = (self.anim_count/60) // (1/self.fps)
 
         if anim_frame > self.frame_count:
             self.anim_count = 0
             anim_frame = 0
-
-        img = pg.transform.flip(self.sprite, self.xflip, self.yflip)
+        
+        #img = pg.transform.flip(self.sprite, self.xflip, self.yflip)
         frame_rect = pg.Rect(anim_frame * self.rect.width, 0, self.rect.width, self.rect.height)
-        self.screen.blit(img, self.rect, area=frame_rect)
+        self.screen.blit(self.sprite, self.rect, area=frame_rect)

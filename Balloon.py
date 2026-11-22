@@ -23,8 +23,8 @@ class Balloon(AnimSprite):
         self.squish = False
         self.squish_timer = 0
 
-    def update(self, events, egg_rect):
-        print(self.squish_timer)
+    def update(self, events, egg_rect, dt):
+        #print(self.squish_timer)
         if self.rect.colliderect(egg_rect):
             self.set_animation("sprites/balloonSquish.png", 6, fps=16)
             self.squish = True
@@ -35,7 +35,7 @@ class Balloon(AnimSprite):
             self.squish_timer = 0
 
         self.rect.y = self.start_y - 5 * sin(self.tick * 0.05)
-        self.tick += 1
+        self.tick += dt
 
         for e in events:
             if e.type == pg.KEYDOWN:
@@ -43,18 +43,15 @@ class Balloon(AnimSprite):
                     self.dx = self.speed
                     if not self.squish:
                         self.set_animation("sprites/balloonMoving.png", 1, fps=8)
-                    self.xflip = False
                 if e.key == pg.K_LEFT:
                     self.dx = -self.speed
                     if not self.squish:
                         self.set_animation("sprites/balloonMoving.png", 1, fps=8)
-                    self.xflip = True
-                    
+            
             elif e.type == pg.KEYUP:
                 if e.key == pg.K_LEFT ^ e.key == pg.K_RIGHT:
                     if not self.squish:
                         self.set_animation("sprites/balloonIdle.png", 6, fps=2)
-                    self.xflip = False
                     self.dx = 0
 
         if self.rect.x <= self.max_pos and self.dx > 0:
@@ -62,4 +59,4 @@ class Balloon(AnimSprite):
         if self.rect.x >= self.min_pos and self.dx < 0:
             self.rect.x += self.dx
 
-        self.animate()
+        self.animate(dt)

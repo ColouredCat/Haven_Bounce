@@ -26,21 +26,22 @@ class Game:
     async def mainloop(self):
         run = True
         score = 0
+        dt = 0
 
         while run:
 
             if((time.time()-self.start_time)//(self.no_enemies+1)>self.no_enemies):
                 self.enemies.append(Enemy(self.screen))
-                print(time.time())
+                #print(time.time())
             self.no_enemies = len(self.enemies)
 
             self.bkg.scroll()
 
             events = pg.event.get()
 
-            self.egg.Update(events, self.balloon.rect.x, self.balloon.rect.width)
+            self.egg.Update(events, self.balloon.rect.x, self.balloon.rect.width, dt/(1/60))
 
-            self.balloon.update(events, self.egg.rect)
+            self.balloon.update(events, self.egg.rect, dt/(1/60))
 
             for col in range(self.no_collectibles):
                 if(self.egg.rect.colliderect(self.collectibles[col].rect)):
@@ -50,25 +51,27 @@ class Game:
                 if (self.collectibles[col].rect.x<0):
                     del self.collectibles[col]
                     self.collectibles.append(Collectible(self.screen))
-                self.collectibles[col].update()  
+                self.collectibles[col].update(dt/(1/60))  
 
             for em in range(self.no_enemies):
                 self.egg.EnemyCollision(self.enemies[em],80,100)
                 if(self.enemies[em].rect.x<-64 or self.enemies[em].rect.y>720 or self.enemies[em].rect.y<-64):
                     del self.enemies[em]
                     self.enemies.append(Enemy(self.screen))
-                self.enemies[em].update()
+                self.enemies[em].update(dt/(1/60))
+
+            #print(self.enemies, self.collectibles)
 
 
             run = self.check_exit(events)
 
             if(self.egg.dead):
-                print("GAME OVER",len(self.collectibles))
+                #print("GAME OVER",len(self.collectibles))
                 pg.draw.circle(self.screen,[0,0,255],[50,50],20,0)
 
             self.draw_text(str(score), 20, 20)
 
-            self.clock.tick(self.fps)
+            dt = self.clock.tick(self.fps) / 1000
             pg.display.flip()
             await asyncio.sleep(0)
 
@@ -98,5 +101,20 @@ class Game:
         self.no_enemies = len(self.enemies)
 
         asyncio.run(self.mainloop())
+        #
+
+debug = True
+
+if debug:
+    import cProfile
+    import pstats
+
+    profiler = cProfile.Profile()
+    profiler.enable()
 
 g = Game()
+
+if debug:
+    profiler.disable()
+    stats = pstats.Stats(profiler).sort_stats("cumulative")
+    stats.print_stats(20)
