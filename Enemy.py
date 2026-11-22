@@ -18,7 +18,7 @@ class Enemy(AnimSprite):
         self.a = randint(-200, 200)
         self.b = randint(300, 500)
 
-    def update(self):
+    def update(self, dt):
         
         self.angle = self.a * sin(radians(self.tick)/self.b)
         self.tick += 1
@@ -26,4 +26,4 @@ class Enemy(AnimSprite):
         self.rect.x -= cos(self.angle) * self.speed
         self.rect.y -= sin(self.angle) * self.speed
 
-        self.animate()
+        self.animate(dt)
