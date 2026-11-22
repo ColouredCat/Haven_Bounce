@@ -32,7 +32,8 @@ class Game:
             self.balloon.update(events, self.egg.rect)
 
             for col in range(self.no_collectibles):
-                if(self.egg.CollectibleCollision(self.collectibles[col],35,35)): #change collectible hitbox here
+                if(self.egg.CollectibleCollision(self.collectibles[col],35,35) 
+                   or self.collectibles[col].rect.x<0): #change collectible hitbox here
                     del self.collectibles[col]
                     self.collectibles.append(Collectible(self.screen))
                 self.collectibles[col].update()
@@ -41,7 +42,7 @@ class Game:
             run = self.check_exit(events)
 
             if(self.egg.dead):
-                print("GAME OVER")
+                print("GAME OVER",len(self.collectibles))
                 pg.draw.circle(self.screen,[0,0,255],[50,50],20,0)
 
             self.clock.tick(self.fps)
