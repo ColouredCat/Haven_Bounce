@@ -11,8 +11,7 @@ class Enemy(AnimSprite):
         height = pg.display.get_window_size()[1]
         self.start_y = randint(height // 4, (height//4)*3)
         
-        super().__init__(screen, "test/knife.png", 2, 16, 32, pg.display.get_window_size()[0], self.start_y)
-        self.xflip = True
+        super().__init__(screen, "sprites/birdMoving.png", 8, 16, 16, pg.display.get_window_size()[0], self.start_y)
         self.angle = 0
         self.tick = 0
         

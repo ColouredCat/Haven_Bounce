@@ -11,7 +11,7 @@ class Egg (AnimSprite):
     speed = 4
 
     def __init__(self, screen):
-        super().__init__(screen, "test/egg.png", 8, 16, 16, 500, 500)
+        super().__init__(screen, "sprites/egg.png", 8, 16, 16, 500, 500)
 
 
     def Update(self, ev, balloon_x, size_x):
