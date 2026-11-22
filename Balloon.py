@@ -12,10 +12,10 @@ class Balloon(AnimSprite):
         self.start_y = 620
         self.tick = 0
 
-        self.max_pos = width - (width/8)
-        self.min_pos = (width/8)
-
         super().__init__(screen, "test/egg.png", 8, 16, 16, start_x, self.start_y, fps=8, scale=6)
+
+        self.max_pos = width - self.rect.width
+        self.min_pos = 0
         self.dx = 0
 
     def update(self, events):
