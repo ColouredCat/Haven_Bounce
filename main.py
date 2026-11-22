@@ -25,11 +25,14 @@ class Game:
 
             events = pg.event.get()
 
-            self.egg.Update(events,self.balloon.rect.x, self.balloon.rect.width)
+            self.egg.Update(events, self.balloon.rect.x, self.balloon.rect.width)
             self.balloon.update(events)
 
             self.enemy.update()
             run = self.check_exit(events)
+
+            if(self.egg.dead):
+                print("GAME OVER")
 
             self.clock.tick(self.fps)
             pg.display.update()
