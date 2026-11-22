@@ -26,10 +26,10 @@ class Game:
 
             events = pg.event.get()
 
-            run = not self.egg.Update(events, self.balloon.rect.x, self.balloon.rect.width)
+            self.egg.Update(events, self.balloon.rect.x, self.balloon.rect.width)
             self.egg.EnemyCollision(self.enemy,16,32)
 
-            self.balloon.update(events)
+            self.balloon.update(events, self.egg.rect)
 
             for col in range(self.no_collectibles):
                 self.collectibles[col].update()

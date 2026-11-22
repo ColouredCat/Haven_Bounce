@@ -9,12 +9,12 @@ class Egg (AnimSprite):
     speed = 4
 
     def __init__(self, screen):
-        super().__init__(screen, "test/egg.png", 8, 16, 16, 500, 500, 5, 4)
+        super().__init__(screen, "test/egg.png", 8, 16, 16, 500, 500)
         return
 
 
     def Update(self, ev, balloon_x, size_x):
-        dead = False
+        self.dead = False
 
         pg.draw.rect(self.screen,(255,0,0),[balloon_x,600,size_x,100],0)
 
@@ -41,9 +41,9 @@ class Egg (AnimSprite):
                 self.rect.y=600
                 self.vy=-10
             else:
-                dead = True
+                self.dead = True
 
-        return dead
+        return self.dead
 
     def EnemyCollision(self, e: Enemy, hitbox_x, hitbox_y):
         if(self.rect.x < e.rect.x + hitbox_x*0.5 
