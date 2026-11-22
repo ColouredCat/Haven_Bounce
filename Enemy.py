@@ -1,28 +1,30 @@
 
 from AnimSprite import AnimSprite
 import pygame as pg
-from math import sin, cos
+from math import sin, cos, radians
 from random import randint
-from utill import to_radians
 
 class Enemy(AnimSprite):
-    speed = 5
+    speed = 10
 
     def __init__(self, screen):
-        super().__init__(screen, "test/knife.png", 2, 16, 32, pg.display.get_window_size()[0], 500)
+        height = pg.display.get_window_size()[1]
+        self.start_y = randint(height / 4, (height/4)*3)
+        
+        super().__init__(screen, "test/knife.png", 2, 16, 32, pg.display.get_window_size()[0], self.start_y)
         self.xflip = True
         self.angle = 0
         self.tick = 0
         
-        self.a = randint(100, 160)
-        self.b = randint(25, 40)
+        self.a = randint(-200, 200)
+        self.b = randint(300, 500)
 
     def update(self):
         
-        self.angle = self.a * sin(to_radians(self.tick)/self.b)
+        self.angle = self.a * sin(radians(self.tick)/self.b)
         self.tick += 1
 
-        self.rect.x -= cos(self.angle) * speed
-        self.rect.y -= sin(self.angle) * speed
+        self.rect.x -= cos(self.angle) * self.speed
+        self.rect.y -= sin(self.angle) * self.speed
 
         self.animate()

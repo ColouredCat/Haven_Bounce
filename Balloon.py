@@ -9,10 +9,12 @@ class Balloon(AnimSprite):
     def __init__(self, screen):
         width = pg.display.get_window_size()[0]
         start_x = width / 2
-        self.start_y = 620
         self.tick = 0
 
-        super().__init__(screen, "test/egg.png", 8, 16, 16, start_x, self.start_y, fps=8, scale=6)
+        super().__init__(screen, "test/egg.png", 8, 16, 16, start_x, 0, fps=8, scale=6)
+
+        self.start_y = pg.display.get_window_size()[1] - self.rect.height
+        self.rect.y = self.start_y
 
         self.max_pos = width - self.rect.width
         self.min_pos = 0
