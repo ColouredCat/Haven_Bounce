@@ -1,6 +1,8 @@
 import pygame as pg
 from AnimSprite import AnimSprite
 from Enemy import Enemy
+from Collectible import Collectible
+
 class Egg (AnimSprite):
     vx=0
     vy=0
@@ -52,3 +54,11 @@ class Egg (AnimSprite):
            and self.rect.y > e.rect.y - hitbox_y*0.5):
             self.dead=True
         return
+
+    def CollectibleCollision(self, col: Collectible, hitbox_x, hitbox_y):
+        if(self.rect.x < col.rect.x + hitbox_x*0.5 
+                   and self.rect.x > col.rect.x - hitbox_x*0.5 
+                   and self.rect.y < col.rect.y + hitbox_y*0.5 
+                   and self.rect.y > col.rect.y - hitbox_y*0.5):
+            return True
+        return False
