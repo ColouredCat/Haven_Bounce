@@ -1,7 +1,7 @@
 
 import asyncio
 import pygame as pg
-from Player import Player
+from Balloon import Balloon
 
 class Game:
     screen_width = 1280
@@ -22,7 +22,7 @@ class Game:
             self.screen.fill("purple")
 
             events = pg.event.get()
-            self.player.update(events)
+            self.balloon.update(events)
             run = self.check_exit(events)
 
             self.clock.tick(self.fps)
@@ -44,7 +44,8 @@ class Game:
         self.screen = pg.display.get_surface()
         self.clock = pg.time.Clock()
 
-        self.player = Player(self.screen, 5)
+        self.balloon = Balloon(self.screen)
+        
 
         asyncio.run(self.mainloop())
 

@@ -1,15 +1,23 @@
 
 from AnimSprite import AnimSprite
 import pygame as pg
+from math import sin
 
-class Player(AnimSprite):
-    def __init__(self, screen, speed):
-        super().__init__(screen, "test/egg.png", 8, 16, 16, 500, 50, fps=8, scale=6)
-        self.speed = speed
+class Balloon(AnimSprite):
+    speed = 5
+
+    def __init__(self, screen):
+        start_x = pg.display.get_window_size()[0] / 2
+        self.start_y = 620
+        self.tick = 0
+
+        super().__init__(screen, "test/egg.png", 8, 16, 16, start_x, self.start_y, fps=8, scale=6)
         self.dx = 0
         self.dy = 0
 
     def update(self, events):
+        self.rect.y = self.start_y - 10 * sin(self.tick * 0.05)
+        self.tick += 1
 
         for e in events:
             if e.type == pg.KEYDOWN:
