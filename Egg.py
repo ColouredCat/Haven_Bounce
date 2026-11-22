@@ -12,7 +12,6 @@ class Egg (AnimSprite):
 
     def __init__(self, screen):
         super().__init__(screen, "test/egg.png", 8, 16, 16, 500, 500)
-        return
 
 
     def Update(self, ev, balloon_x, size_x):
