@@ -12,8 +12,8 @@ class Balloon(AnimSprite):
         self.start_y = 620
         self.tick = 0
 
-        self.max_pos = width - (width/4)
-        self.min_pos = (width/4)
+        self.max_pos = width - (width/8)
+        self.min_pos = (width/8)
 
         super().__init__(screen, "test/egg.png", 8, 16, 16, start_x, self.start_y, fps=8, scale=6)
         self.dx = 0
@@ -25,10 +25,10 @@ class Balloon(AnimSprite):
         for e in events:
             if e.type == pg.KEYDOWN:
                 self.set_animation("test/egg.png", 8, fps=8)
-                if e.key == pg.K_d:
+                if e.key == pg.K_RIGHT:
                     self.dx = self.speed
                     self.xflip = False
-                elif e.key == pg.K_a:
+                elif e.key == pg.K_LEFT:
                     self.dx = -self.speed
                     self.xflip = True
                     
@@ -36,7 +36,7 @@ class Balloon(AnimSprite):
                 self.set_animation("test/idle.png", 2, fps=2)
                 self.xflip = False
 
-                if e.key == pg.K_d or e.key == pg.K_a:
+                if e.key == pg.K_LEFT or e.key == pg.K_RIGHT:
                     self.dx = 0
 
         if self.rect.x <= self.max_pos and self.dx > 0:

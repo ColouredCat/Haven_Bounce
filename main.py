@@ -25,7 +25,7 @@ class Game:
 
             events = pg.event.get()
 
-            self.egg.Update(events,self.egg.rect.x,20) # change this for actual balloon data
+            self.egg.Update(events,self.balloon.rect.x, self.balloon.rect.width)
             self.balloon.update(events)
 
             self.enemy.update()
