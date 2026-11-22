@@ -44,6 +44,8 @@ class Game:
         while run:
 
             if(not start and run):
+                pg.mixer.music.load("audio/intro.ogg")
+                pg.mixer.music.play(1)
                 for i in range(18*60):
                     run = self.check_exit(pg.event.get())
                     self.intro.animate(1)
@@ -52,6 +54,9 @@ class Game:
                     if(not run):
                         break
                 start=True
+                pg.mixer.music.stop()
+                pg.mixer.music.load("audio/music.ogg")
+                pg.mixer.music.play(-1)
 
             time_since_start =(time.time()-self.start_time)
             if(time_since_start//(self.no_enemies*1.5+1)>self.no_enemies
@@ -90,6 +95,9 @@ class Game:
             run = self.check_exit(events)
 
             if(self.egg.dead):
+                pg.mixer.music.stop()
+                pg.mixer.music.load("audio/death.ogg")
+                pg.mixer.music.play(1, 1.85)
                 self.surface.fill((255,0,0,3))
                 self.screen.blit(self.surface,(0,0))
                 self.GameOver.screen.blit(self.GameOver.sprite, (-60,100))
@@ -97,6 +105,9 @@ class Game:
                 await asyncio.sleep(3)
                 score = 0
                 self.setup()
+                pg.mixer.music.stop()
+                pg.mixer.music.load("audio/music.ogg")
+                pg.mixer.music.play(-1)
 
             self.draw_text(str(score), 20, 20)
             self.overlay.screen.blit(self.overlay.sprite, (self.overlay.x+self.overlay.sprite.get_rect().width, 0))
