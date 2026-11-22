@@ -26,10 +26,12 @@ class Game:
 
     async def mainloop(self):
         run = True
+        start = False
         score = 0
         dt = 0
 
         while run:
+
             time_since_start =(time.time()-self.start_time)
             if(time_since_start//(self.no_enemies*1.5+1)>self.no_enemies
                and time_since_start>4):

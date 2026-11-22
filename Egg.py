@@ -27,9 +27,12 @@ class Egg (AnimSprite):
 
         for e in ev:
             if e.type == pg.KEYDOWN:
-                if e.key == pg.K_SPACE and self.double_jump:
+                if e.key == pg.K_w and self.double_jump:
                     self.vy=-10
                     self.double_jump=False
+
+                if e.key == pg.K_s:
+                    self.vy=20
             if e.type == pg.KEYUP:
                 self.vx=0
 
