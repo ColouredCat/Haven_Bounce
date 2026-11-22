@@ -25,7 +25,7 @@ class Game:
             events = pg.event.get()
 
             self.player.update(events)
-            self.egg.Update(events)
+            self.egg.Update(events,self.egg.rect.x,20) # change this for actual balloon data
 
             run = self.check_exit(events)
 

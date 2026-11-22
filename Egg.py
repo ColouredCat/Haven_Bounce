@@ -11,7 +11,7 @@ class Egg (AnimSprite):
         return
 
 
-    def Update(self, ev):
+    def Update(self, ev, balloon_x, size_x):
 
         vx=0
 
@@ -32,10 +32,13 @@ class Egg (AnimSprite):
         self.rect.y += self.vy
 
         if(self.rect.y>600):
-            self.rect.y=600
-            self.vy=-10
-
-        #add death and bounce logic here
+            if(self.rect.x<balloon_x+size_x*0.5 and self.rect.x>balloon_x-size_x*0.5):
+                self.rect.y=600
+                self.vy=-10
+            else:
+                #add death
+                self.vy=-30
+                print("GAME OVER")
 
         return
     
