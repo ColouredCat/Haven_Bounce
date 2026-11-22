@@ -1,5 +1,6 @@
 
 import asyncio
+import time
 import pygame as pg
 from Egg import Egg
 from Balloon import Balloon
@@ -28,6 +29,11 @@ class Game:
 
         while run:
 
+            if((time.time()-self.start_time)//(self.no_enemies+1)>self.no_enemies):
+                self.enemies.append(Enemy(self.screen))
+                print(time.time())
+            self.no_enemies = len(self.enemies)
+
             self.bkg.scroll()
 
             events = pg.event.get()
@@ -44,7 +50,7 @@ class Game:
                 if (self.collectibles[col].rect.x<0):
                     del self.collectibles[col]
                     self.collectibles.append(Collectible(self.screen))
-                self.collectibles[col].update()
+                self.collectibles[col].update()  
 
             for em in range(self.no_enemies):
                 self.egg.EnemyCollision(self.enemies[em],80,100)
@@ -72,6 +78,7 @@ class Game:
         pg.mixer.quit()
 
     def __init__(self):
+        self.start_time = time.time()
         pg.init()
         pg.display.init()
         pg.font.init()
@@ -87,7 +94,7 @@ class Game:
         self.no_collectibles = len(self.collectibles)
         self.bkg = Background(self.screen)
         self.egg = Egg(self.screen)
-        self.enemies = [Enemy(self.screen),Enemy(self.screen),Enemy(self.screen)]
+        self.enemies = []
         self.no_enemies = len(self.enemies)
 
         asyncio.run(self.mainloop())
