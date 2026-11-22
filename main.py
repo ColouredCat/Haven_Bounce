@@ -1,12 +1,8 @@
 
 import asyncio
 import pygame as pg
-<<<<<<< HEAD
-from Player import Player
 from Egg import Egg
-=======
 from Balloon import Balloon
->>>>>>> 46b2a45f5b54caae65e9e50f2e3a1a398c6fe65a
 from Enemy import Enemy
 
 class Game:
@@ -28,14 +24,10 @@ class Game:
             self.screen.fill("purple")
 
             events = pg.event.get()
-<<<<<<< HEAD
 
-            self.player.update(events)
             self.egg.Update(events,self.egg.rect.x,20) # change this for actual balloon data
-
-=======
             self.balloon.update(events)
->>>>>>> 46b2a45f5b54caae65e9e50f2e3a1a398c6fe65a
+
             self.enemy.update()
             run = self.check_exit(events)
 
@@ -58,12 +50,9 @@ class Game:
         self.screen = pg.display.get_surface()
         self.clock = pg.time.Clock()
 
-<<<<<<< HEAD
-        self.player = Player(self.screen, 5)
-        self.egg = Egg(self.screen)
-=======
         self.balloon = Balloon(self.screen)
->>>>>>> 46b2a45f5b54caae65e9e50f2e3a1a398c6fe65a
+        self.egg = Egg(self.screen)
+        self.balloon = Balloon(self.screen)
         self.enemy = Enemy(self.screen)
 
         asyncio.run(self.mainloop())
