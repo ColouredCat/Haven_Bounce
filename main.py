@@ -4,6 +4,7 @@ import pygame as pg
 from Egg import Egg
 from Balloon import Balloon
 from Enemy import Enemy
+from Collectible import Collectible
 
 class Game:
     screen_width = 1280
@@ -29,6 +30,9 @@ class Game:
             self.egg.EnemyCollision(self.enemy,16,32)
 
             self.balloon.update(events)
+
+            for col in range(self.no_collectibles):
+                self.collectibles[col].update()
 
             self.enemy.update()
             run = self.check_exit(events)
@@ -60,6 +64,8 @@ class Game:
         self.egg = Egg(self.screen)
         self.balloon = Balloon(self.screen)
         self.enemy = Enemy(self.screen)
+        self.collectibles = [Collectible(self.screen)]
+        self.no_collectibles = 1
 
         asyncio.run(self.mainloop())
 
