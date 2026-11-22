@@ -8,6 +8,7 @@ from Enemy import Enemy
 from Background import Background
 from Collectible import Collectible
 from GameOver import GameOver
+from StartScreen import StartScreen
 
 class Game:
     screen_width = 1280
@@ -24,14 +25,22 @@ class Game:
         s = self.font.render(text, False, pg.Color(0,0,0))
         self.screen.blit(s, (x, y))
 
-    def gameOver(self):
-        self.surface.fill((255,0,0,5))
-        self.screen.blit(self.surface,(0,0))
-        self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x, 0))
-        self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x+self.GameOver.sprite.get_rect().width, 0))
+    def startScreen(self):
+        self.startscreen.screen.blit(self.startscreen.sprite, (self.startscreen.x, 0))
+        self.startscreen.screen.blit(self.startscreen.sprite, (self.startscreen.x+self.startscreen.sprite.get_rect().width, 0))
         pg.display.flip()
 
     async def mainloop(self):
+        start=False
+        while(not start):
+            self.startScreen()
+            if(not self.check_exit(pg.event.get())):
+                pg.quit()
+
+            #for e in pg.event.get():
+            if(pg.KEYDOWN):
+                start=True
+                
         run = True
         score = 0
 
@@ -46,7 +55,8 @@ class Game:
 
             events = pg.event.get()
 
-            self.egg.Update(events, self.balloon.rect.x, self.balloon.rect.width)
+            if(not self.egg.dead):
+                self.egg.Update(events, self.balloon.rect.x, self.balloon.rect.width)
 
             self.balloon.update(events, self.egg.rect)
 
@@ -68,23 +78,23 @@ class Game:
                 self.enemies[em].update()
 
 
-            run = self.check_exit(events)
+            if(not self.check_exit(events)):
+                pg.quit()
 
             if(self.egg.dead):
-                print("GAME OVER",len(self.collectibles))
-                pg.draw.circle(self.screen,[0,0,255],[50,50],20,0)
+                self.surface.fill((255,0,0,3))
+                self.screen.blit(self.surface,(0,0))
+                self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x, 0))
+                self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x+self.GameOver.sprite.get_rect().width, 0))
+                pg.display.flip()
 
-                run=False
+                #run=False
 
             self.draw_text(str(score), 20, 20)
 
             self.clock.tick(self.fps)
             pg.display.flip()
             await asyncio.sleep(0)
-
-
-        while self.check_exit(pg.event.get()):
-            self.gameOver()
 
         pg.quit()
         pg.display.quit()
@@ -113,6 +123,7 @@ class Game:
         self.no_enemies = len(self.enemies)
 
         self.GameOver = GameOver(self.screen)
+        self.startscreen = StartScreen(self.screen)
 
         asyncio.run(self.mainloop())
 
