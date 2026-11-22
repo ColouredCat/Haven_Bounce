@@ -11,7 +11,6 @@ class Egg (AnimSprite):
     speed = 4
 
     double_jump=True
-    dead=False
 
     def __init__(self, screen):
         super().__init__(screen, "sprites/egg.png", 8, 16, 16, pg.display.get_window_size()[0]/2, 500)

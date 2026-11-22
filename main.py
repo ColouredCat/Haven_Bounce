@@ -8,7 +8,6 @@ from Enemy import Enemy
 from Background import Background
 from Collectible import Collectible
 from GameOver import GameOver
-from StartScreen import StartScreen
 
 class Game:
     screen_width = 1280
@@ -25,22 +24,14 @@ class Game:
         s = self.font.render(text, False, pg.Color(0,0,0))
         self.screen.blit(s, (x, y))
 
-    def startScreen(self):
-        self.startscreen.screen.blit(self.startscreen.sprite, (self.startscreen.x, 0))
-        self.startscreen.screen.blit(self.startscreen.sprite, (self.startscreen.x+self.startscreen.sprite.get_rect().width, 0))
+    def gameOver(self):
+        self.surface.fill((255,0,0,5))
+        self.screen.blit(self.surface,(0,0))
+        self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x, 0))
+        self.GameOver.screen.blit(self.GameOver.sprite, (self.GameOver.x+self.GameOver.sprite.get_rect().width, 0))
         pg.display.flip()
 
     async def mainloop(self):
-        start=False
-        while(not start):
-            self.startScreen()
-            if(not self.check_exit(pg.event.get())):
-                pg.quit()
-
-            #for e in pg.event.get():
-            if(pg.KEYDOWN):
-                start=True
-                
         run = True
         score = 0
         dt = 0
@@ -80,8 +71,7 @@ class Game:
             #print(self.enemies, self.collectibles)
 
 
-            if(not self.check_exit(events)):
-                pg.quit()
+            run = self.check_exit(events)
 
             if(self.egg.dead):
                 self.surface.fill((255,0,0,3))
@@ -94,6 +84,10 @@ class Game:
             dt = self.clock.tick(self.fps) / 1000
             pg.display.flip()
             await asyncio.sleep(0)
+
+
+        while self.check_exit(pg.event.get()):
+            self.gameOver()
 
         pg.quit()
         pg.display.quit()
@@ -122,7 +116,6 @@ class Game:
         self.no_enemies = len(self.enemies)
 
         self.GameOver = GameOver(self.screen)
-        self.startscreen = StartScreen(self.screen)
 
         asyncio.run(self.mainloop())
         #
