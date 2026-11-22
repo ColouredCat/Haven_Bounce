@@ -41,7 +41,7 @@ class Egg (AnimSprite):
         if(self.rect.y>600):
             if(self.rect.x<balloon_x+size_x*0.5 and self.rect.x>balloon_x-size_x*0.5):
                 self.rect.y=600
-                self.vy=-10
+                self.vy=-20
             else:
                 self.dead = True
 
